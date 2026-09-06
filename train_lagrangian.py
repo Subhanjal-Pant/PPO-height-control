@@ -5,14 +5,6 @@ class LagrangianSolver:
     """Manages adaptive dual multipliers for physical constraints via dual
     gradient ascent, with priority support via per-constraint learning rates.
 
-    NOTE: this class is unchanged from what you already had. The chattering
-    regression was NOT in the dual-ascent math here -- update_multipliers()
-    just does gradient ascent on whatever mean cost it's handed. The bug was
-    upstream, in HOW that mean was computed in train.py's LagrangianCallback
-    (it was being averaged over every rollout step, including steps where a
-    given direction was inactive and force-zeroed -- see train.py for the
-    fix). This file is included for completeness / so you have the full set
-    together, not because anything here changed.
     """
 
     def __init__(self, cost_limits, learning_rates=None, max_lambda: float = 10.0):

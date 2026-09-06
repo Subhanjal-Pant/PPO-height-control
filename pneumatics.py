@@ -25,16 +25,16 @@ class PneumaticAirSpringPhysics:
         Cd_exhaust: float = 0.58,
         T_amb: float = 293.15,
         n_substeps: int = 40,  # Internal physics sub-stepping (dt_physics = 1 ms)
-        csv_filepath: str = "LUT_effective_area.csv",
+        csv_filepath: str = "LUT_effective_area.csv", # Dummy data for now
         enable_randomization: bool = False,
-        delay_steps: int = 1,  # Sensor & I2C hardware observation delay (1 step = 40ms)
+        delay_steps: int = 1,  # Assumed Sensor & I2C hardware observation delay (1 step = 40ms)
     ):
         self.dt_control = dt
         self.n_substeps = max(1, n_substeps)
         self.dt_physics = self.dt_control / self.n_substeps
         self.enable_randomization = enable_randomization
 
-        # --- ADDED: Latency / Hardware Delay Queue ---
+        # ADDED: Latency / Hardware Delay Queue
         self.delay_steps = delay_steps
         self.obs_buffer = deque(maxlen=self.delay_steps + 1)
 
@@ -277,22 +277,7 @@ class PneumaticAirSpringPhysics:
 
         h, v, P, T, m, u_act_in, u_act_out = self.y
         A_eff, V_chamber, _, _ = self.get_geometry(h, P)
-
-        # REMOVING DIRECT RETURN:
-        # return {
-        #     "height": float(h),
-        #     "velocity": float(v),
-        #     "P_spring_abs": float(P),
-        #     "P_spring_gauge": float(P - self.P_atm),
-        #     "T_spring": float(T),
-        #     "m_air": float(m),
-        #     "A_eff": float(A_eff),
-        #     "V_chamber": float(V_chamber),
-        #     "u_act_inlet": float(u_act_in),
-        #     "u_act_exhaust": float(u_act_out),
-        #     "mass_constraint_residual": float(m - (P * V_chamber) / (self.R * T)),
-        # }
-
+        
         # --- ADDED: Push fresh physical state into delay queue ---
         current_obs = {
             "height": float(h),
