@@ -12,25 +12,6 @@ from train_lagrangian import LagrangianSolver
 
 torch.set_num_threads(1)
 
-# NOTE: with the continuous PWM action space, PPO's MlpPolicy automatically
-# uses a Gaussian output distribution instead of a categorical one -- no
-# changes needed to policy_kwargs or the PPO constructor for this.
-#
-# cost_switching -> cost_duty_rate: with PWM, the valve toggles by design at
-# ~7Hz whenever any duty is commanded, so counting binary transitions is no
-# longer a meaningful "smoothness" signal. cost_duty_rate instead penalizes
-# large step-to-step changes in the commanded duty magnitude, which is the
-# continuous-control analog of the same idea (discourage jerky control
-# effort, not discourage valve actuation itself).
-#
-# Direction-decomposed constraints: overshoot and duty-rate are each split
-# into an up/down (or inflate/exhaust) pair with their own dual multiplier.
-# This is a single shared policy underneath -- the split lives entirely in
-# the constraint/cost machinery (this solver + pneumatic_env.py's per-step
-# cost dict), not in the network. The precise term for this scheme is
-# "direction-decomposed constrained policy optimization" / per-direction
-# Lagrangian dual variables over a single shared policy -- NOT multi-head,
-# multi-critic, multi-agent, or an ensemble.
 SOLVER = LagrangianSolver(
     cost_limits={
         "cost_overshoot_up": 0.35,
