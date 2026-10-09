@@ -1,6 +1,0 @@
-
-
-tensorboard --logdir ./logs/
-
-python e:/PPO/evaluation_one.py
-python e:/PPO/train.py
