@@ -16,7 +16,7 @@ class PneumaticAirSpringPhysics:
     def __init__(
         self,
         dt: float = 0.040,  # RL Agent Action Interval (25 Hz)
-        mass: float = 30.0,
+        mass: float = 60.0,
         p_supply: float = 300000.0,
         tau_v: float = 0.012,
         viscous: float = 45.0,
