@@ -14,7 +14,7 @@ def gauge_bar_to_abs_pa(gauge_bar: float, p_atm: float = 101325.0) -> float:
 
 class PneumaticAirSpringEnv(gym.Env):
     """Custom Gymnasium Environment for Pneumatic Air Spring Height Control,
-    using PWM duty-cycle valve actuation matching the real ESP32 firmware:
+    using PWM duty-cycle valve actuation matching the ESP32 firmware:
 
       - Control loop: 25 Hz (dt = 40ms), matching LOOP_INTERVAL.
       - PWM base period: 143ms (~7 Hz), matching CYCLE_TIME / solenoid rating.
@@ -310,8 +310,7 @@ class PneumaticAirSpringEnv(gym.Env):
         self.last_duty_cmd = duty_cmd
 
         # 3. Resolve PWM phase into this step's actual binary valve state,
-        # exactly matching how the firmware samples runBinaryPulsing() once
-        # per 40ms loop tick.
+        # matching how the firmware samples runBinaryPulsing() once per 40ms loop tick.
         self.current_valve_state = self._resolve_pwm_valve_state(duty_cmd)
 
         # 4. Step Physics Simulation (binary state held constant across substeps)
@@ -354,13 +353,12 @@ class PneumaticAirSpringEnv(gym.Env):
         truncated = self.current_step >= self.max_steps
 
         # 7. Cost Metrics for Lagrangian Dual Updates
-        # Split by direction so each gets its own Lagrange multiplier --
-        # inflate and exhaust operate in different flow regimes (choked vs
-        # subcritical), so pooling their duty-rate cost into one signal
+        # Split by direction so each gets its own Lagrange multiplier 
+        # inflate and exhaust operate in different flow regimes (choked vs subcritical), so pooling their duty-rate cost into one signal
         # masks that asymmetry from the dual solver. Same idea for
         # overshoot: settling behavior differs depending on whether the
         # transition needs height to increase or decrease.
-        #
+        
         # IMPORTANT: on any given step, duty_cmd has ONE sign (or is zero),
         # so exactly one member of each pair below is a real measurement
         # and the other is force-zeroed as a placeholder -- it does NOT
