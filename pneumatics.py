@@ -8,7 +8,7 @@ from scipy.interpolate import RectBivariateSpline
 
 
 class PneumaticAirSpringPhysics:
-    """Peer-Review Grade Thermodynamic & Kinetic Simulator for a
+    """Thermodynamic & Kinetic Simulator for a
 
     Rolling-Lobe Air Spring Rig with Binary Solenoid Valve Control.
     """
