@@ -56,7 +56,7 @@ class PneumaticAirSpringPhysics:
         self.min_height = 0.145  # Minimum stroke bound [m] (145 mm)
         self.max_height = 0.225  # Maximum stroke bound [m] (225 mm)
         self.height_nom = (self.min_height + self.max_height) / 2.0
-        self.V_dead = 0.0002  # Dead volume [m^3]
+        self.V_dead = 0.0008  # Dead volume [m^3]
 
         # --- Valve Flow & Geometry ---
         self.A_valve_inlet = 1.5e-5  # [m^2]
