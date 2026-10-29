@@ -21,8 +21,8 @@ class PneumaticAirSpringPhysics:
         tau_v: float = 0.012,
         viscous: float = 45.0,
         f_coulomb: float = 8.0,
-        Cd_inlet: float = 0.65,
-        Cd_exhaust: float = 0.58,
+        Cd_inlet: float = 0.085,
+        Cd_exhaust: float = 0.105,
         T_amb: float = 293.15,
         n_substeps: int = 40,  # Internal physics sub-stepping (dt_physics = 1 ms)
         csv_filepath: str = "LUT_effective_area.csv", # Dummy data for now
