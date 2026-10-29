@@ -200,8 +200,8 @@ class PneumaticAirSpringEnv(gym.Env):
             rand_tau_v = float(self.np_random.uniform(0.010, 0.015))
             rand_viscous = float(self.np_random.uniform(35.0, 55.0))
             rand_f_coulomb = float(self.np_random.uniform(6.0, 10.0))
-            rand_cd_inlet = float(self.np_random.uniform(0.40, 0.50))
-            rand_cd_exhaust = float(self.np_random.uniform(0.53, 0.63))
+            rand_cd_inlet   = float(self.np_random.uniform(0.07, 0.10))
+            rand_cd_exhaust = float(self.np_random.uniform(0.085, 0.125))
 
             self.target_height = float(self.np_random.uniform(0.155, 0.205))
             start_height = float(self.np_random.uniform(0.160, 0.175))
